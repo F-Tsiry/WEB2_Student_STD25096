@@ -21,17 +21,17 @@ export class StudentService {
   }
 
   public createStudent(data: Student): Student {
-    // Validation: Check required fields
+    
     if (!data.studentNumber || !data.firstName || !data.lastName || !data.birthDate || data.year === undefined) {
       throw new Error('All fields are required.');
     }
 
-    // Validation: Check year range (check between 1 and 3)
+    
     if (data.year < 1 || data.year > 3) {
       throw new Error('Year must be between 1 and 3.');
     }
 
-    // Validation: Check for existing student number
+    
     const existingStudent = this.studentRepository.findByStudentNumber(data.studentNumber);
     if (existingStudent) {
       throw new Error(`Student number '${data.studentNumber}' already exists.`);
