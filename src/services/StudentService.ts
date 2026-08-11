@@ -41,7 +41,7 @@ export class StudentService {
   }
 
   public updateStudent(studentNumber: string, data: Partial<Student>): Student {
-    // Validation: Check year range if updating year
+    
     if (data.year !== undefined && (data.year < 1 || data.year > 3)) {
       throw new Error('Year must be between 1 and 3.');
     }

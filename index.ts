@@ -6,7 +6,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Mounting the StudentController sub-app directly on /students
+
 app.use('/students', StudentController);
 
 app.listen(PORT, () => {
