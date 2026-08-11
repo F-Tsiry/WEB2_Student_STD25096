@@ -1,0 +1,17 @@
+# Dépendances
+node_modules/
+target/
+
+# Environnement et secrets
+.env
+.env.local
+
+# Fichiers générés / Build
+dist/
+build/
+*.log
+
+# Fichiers système et éditeurs
+.DS_Store
+.vscode/
+.idea/
