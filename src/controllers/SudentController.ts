@@ -30,7 +30,7 @@ export class StudentController {
 
   private getByNumber = (req: Request<{ studentNumber: string }>, res: Response): void => {
     try {
-      const student = this.studentService.getStudentByNumber(req.params.studentNumber);
+      const student = this.studentService.getStudentById(req.params.studentNumber);
       res.status(200).json(student);
     } catch (error: any) {
       res.status(404).json({ error: error.message });
