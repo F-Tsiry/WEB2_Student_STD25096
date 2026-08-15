@@ -12,17 +12,17 @@ export class StudentService {
     return this.studentRepository.findAll();
   }
 
-  public getStudentByNumber(studentNumber: string): Student {
-    const student = this.studentRepository.findByStudentNumber(studentNumber);
+  public getStudentById(studentId: string): Student {
+    const student = this.studentRepository.findByStudentId(studentId);
     if (!student) {
-      throw new Error(`Student with number '${studentNumber}' not found.`);
+      throw new Error(`Student with Id '${studentId}' not found.`);
     }
     return student;
   }
 
   public createStudent(data: Student): Student {
     
-    if (!data.studentNumber || !data.firstName || !data.lastName || !data.birthDate || data.year === undefined) {
+    if (!data.studentId || !data.firstName || !data.lastName || !data.birthDate || data.year === undefined) {
       throw new Error('All fields are required.');
     }
 
@@ -32,32 +32,32 @@ export class StudentService {
     }
 
     
-    const existingStudent = this.studentRepository.findByStudentNumber(data.studentNumber);
+    const existingStudent = this.studentRepository.findByStudentId(data.studentId);
     if (existingStudent) {
-      throw new Error(`Student number '${data.studentNumber}' already exists.`);
+      throw new Error(`Student Id '${data.studentId}' already exists.`);
     }
 
     return this.studentRepository.create(data);
   }
 
-  public updateStudent(studentNumber: string, data: Partial<Student>): Student {
+  public updateStudent(studentId: string, data: Partial<Student>): Student {
     
     if (data.year !== undefined && (data.year < 1 || data.year > 3)) {
       throw new Error('Year must be between 1 and 3.');
     }
 
-    const updatedStudent = this.studentRepository.update(studentNumber, data);
+    const updatedStudent = this.studentRepository.update(studentId, data);
     if (!updatedStudent) {
-      throw new Error(`Student with number '${studentNumber}' not found.`);
+      throw new Error(`Student with Id '${studentId}' not found.`);
     }
 
     return updatedStudent;
   }
 
-  public deleteStudent(studentNumber: string): void {
-    const isDeleted = this.studentRepository.delete(studentNumber);
+  public deleteStudent(studentId: string): void {
+    const isDeleted = this.studentRepository.delete(studentId);
     if (!isDeleted) {
-      throw new Error(`Student with number '${studentNumber}' not found.`);
+      throw new Error(`Student with Id '${studentId}' not found.`);
     }
   }
 }
