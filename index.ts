@@ -2,7 +2,7 @@ import express from 'express';
 import StudentController from './src/controllers/SudentController';
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 3000;
 
 app.use(express.json());
 
