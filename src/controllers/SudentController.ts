@@ -12,11 +12,11 @@ export class StudentController {
   }
 
   private registerRoutes(): void {
-    this.app.get('/', this.getAll);
-    this.app.get('/:studentNumber', this.getByNumber);
-    this.app.post('/', this.create);
-    this.app.put('/:studentNumber', this.update);
-    this.app.delete('/:studentNumber', this.delete);
+    this.app.get('/students', this.getAll);
+    this.app.get('/students:studentNumber', this.getByNumber);
+    this.app.post('/students', this.create);
+    this.app.put('/students:studentNumber', this.update);
+    this.app.delete('/students:studentNumber', this.delete);
   }
 
   private getAll = (req: Request, res: Response): void => {
