@@ -1,14 +1,13 @@
-import express from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 import StudentController from './src/controllers/SudentController';
 
-const app = express();
+const app: Express = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json())
 
-
-app.use('/students', StudentController);
+app.use('/students', StudentController)
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -1,4 +1,4 @@
-import { pool } from './connection';
+import { pool } from './Connection';
 
 async function runMigration() {
   try {
