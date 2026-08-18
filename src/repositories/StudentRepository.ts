@@ -35,7 +35,7 @@ export default class StudentRepository {
     }
 
     public async create(student: Student): Promise<Student> {
-        
+
             const query = "INSERT INTO student (student_id, first_name, last_name, birth_date, year) VALUES ($1, $2, $3, $4, $5)";
             const values = [student.studentId, student.firstName, student.lastName, student.birthDate, student.year];
             await pool.query(query, values);
