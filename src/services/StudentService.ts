@@ -44,7 +44,7 @@ export class StudentService {
         return await this.studentRepository.create(studentToCreate);
         }
 
-    public async updateStudent(studentId: String, data: Student) {
+    public async updateStudent(studentId: String, data: Partial<Student>): Promise<Student> {
         return await this.studentRepository.update(studentId, data);
     }
 }
