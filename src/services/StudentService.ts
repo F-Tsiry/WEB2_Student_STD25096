@@ -43,4 +43,8 @@ export class StudentService {
 
         return await this.studentRepository.create(studentToCreate);
         }
+
+    public async updateStudent(studentId: String, data: Student) {
+        return await this.studentRepository.update(studentId, data);
+    }
 }
