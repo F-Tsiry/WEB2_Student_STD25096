@@ -47,4 +47,8 @@ export class StudentService {
     public async updateStudent(studentId: String, data: Partial<Student>): Promise<Student> {
         return await this.studentRepository.update(studentId, data);
     }
+
+    public async deleteStudent(studentId: String): Promise<Boolean> {
+        return await this.studentRepository.delete(studentId);
+    }
 }

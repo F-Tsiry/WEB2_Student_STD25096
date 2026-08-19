@@ -43,12 +43,17 @@ export default class StudentRepository {
             return result.rows[0] || null;
     }
 
-    public async update(studentId: String, data: Partial<Student>): Promise<Student> {
+    public async update(studentId: String, data: Omit<Partial<Student>, "studentId">): Promise<Student> {
             const query = "UPDATE student SET first_name = $1, last_name = $2, birth_date = $3, year = $4";
             const value = [data.firstName, data.lastName, data.birthDate, data.year];
             pool.query(query, value);
             const result = await pool.query("select * from student WHERE student_id = $1;", [studentId])
             return result.rows[0] || null;
+    }
+
+    public async delete(studentId: String): Promise<Boolean> {
+        const result = await pool.query("DELETE FROM student WHERE student_id = $1;", [studentId]);
+        return (result.rowCount ?? 0) > 0;
     }
 }
 

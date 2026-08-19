@@ -61,6 +61,17 @@ export class StudentController {
             res.status(500).json({ error: "Internal server error"});
         }
     })
+
+
+    this.app.delete('/:id', async (req: Request, res: Response): Promise<void> => {
+        const studentId = req.params.id as String;
+        const isDeleted = await this.studentService.deleteStudent(studentId);
+        if(isDeleted) {
+            res.status(200).json({message: "Student deleted"});
+        } else {
+            res.status(404).json({error: "Student not found"});
+        }
+    })
     
   }
 }
