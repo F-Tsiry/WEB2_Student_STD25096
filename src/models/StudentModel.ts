@@ -5,3 +5,4 @@ export interface Student {
   birthDate: string;
   year: number;
 }
+

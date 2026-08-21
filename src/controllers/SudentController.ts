@@ -1,23 +1,23 @@
-import express, { type Router, type Request, type Response } from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 import { StudentService } from '../services/StudentService';
 
-export class StudentController {
-  public router: Router;
+class StudentController {
+  public app: Express;
   private studentService: StudentService;
 
-  constructor() {
-    this.router = express.Router();
+  constructor(app: Express) {
+    this.app = app;
     this.studentService = new StudentService();
-    this.registerRoutes();
+    this.registerRoutes(app);
   }
 
-  private registerRoutes(): void {
-    this.router.get('/', this.getAll.bind(this));
-    this.router.get('/:id', this.getStudentById.bind(this));
-    this.router.post('/', this.createStudent.bind(this));
-    this.router.put('/:id', this.update.bind(this));
-    this.router.patch('/:id', this.update.bind(this));
-    this.router.delete('/:id', this.delete.bind(this));
+  private registerRoutes(app: Express): void {
+    this.app.get('/', this.getAll.bind(this));
+    this.app.get('/:id', this.getStudentById.bind(this));
+    this.app.post('/', this.createStudent.bind(this));
+    this.app.put('/:id', this.update.bind(this));
+    this.app.patch('/:id', this.patch.bind(this));
+    this.app.delete('/:id', this.delete.bind(this));
   }
 
   public async getAll(req: Request, res: Response): Promise<void> {
@@ -68,6 +68,22 @@ export class StudentController {
     }
   }
 
+  public async patch(req: Request, res: Response): Promise<void> {
+    try {
+      const studentId = req.params.id as string;
+      const student = await this.studentService.updateStudent(studentId, req.body);
+      
+      if (!student) {
+        res.status(404).json({ error: 'Student not found' });
+        return;
+      }
+      
+      res.status(200).json(student);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   public async delete(req: Request, res: Response): Promise<void> {
     try {
       const studentId = req.params.id as string;
@@ -83,4 +99,4 @@ export class StudentController {
   }
 }
 
-export default new StudentController().router;
+export default new StudentController(express()).app;
