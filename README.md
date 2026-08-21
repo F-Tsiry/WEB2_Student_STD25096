@@ -36,7 +36,7 @@ npm install
 ### 2. Environment Variables
 Create a .env file in the root directory:
 PORT=3000
-DATABASE_URL=postgresql://postgres:password@localhost:5432/students_db
+DATABASE_URL=postgresql://postgres:password@localhost:5432/database_db
 JWT_SECRET=your_super_secret_jwt_key
 JWT_EXPIRES_IN=1h
 CORS_ORIGINS=*

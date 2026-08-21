@@ -1,18 +1,19 @@
-import express, { Request, Response } from 'express';
+import { type Express, type Request, type Response } from 'express';
 import { AuthService } from '../services/AuthService';
 import { authenticate, AuthenticatedRequest } from '../Security/AuthMiddleware';
 
 export class AuthController {
-  public router = express.Router();
+  private app: Express;
   private authService: AuthService;
 
-  constructor() {
+  constructor(app: Express) {
+    this.app = app;
     this.authService = new AuthService();
     this.registerRoutes();
   }
 
   private registerRoutes(): void {
-    this.router.post('/register', async (req: Request, res: Response) => {
+    this.app.post('/auth/register', async (req: Request, res: Response) => {
       try {
         const result = await this.authService.register(req.body, 'STUDENT');
         res.status(201).json(result);
@@ -21,7 +22,7 @@ export class AuthController {
       }
     });
 
-    this.router.post('/login', async (req: Request, res: Response) => {
+    this.app.post('/auth/login', async (req: Request, res: Response) => {
       try {
         const result = await this.authService.login(req.body);
         res.status(200).json(result);
@@ -30,10 +31,8 @@ export class AuthController {
       }
     });
 
-    this.router.get('/whoami', authenticate, (req: AuthenticatedRequest, res: Response) => {
+    this.app.get('/auth/whoami', authenticate, (req: AuthenticatedRequest, res: Response) => {
       res.status(200).json({ user: req.user });
     });
   }
 }
-
-export default new AuthController().router;
