@@ -1,4 +1,4 @@
-import { pool } from '../configuration/Connection';
+import { pool } from '../configuration/database';
 import { Student } from '../models/StudentModel';
 
 export default class StudentRepository {

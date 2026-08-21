@@ -1,4 +1,4 @@
-import { pool } from '../configuration/Connection';
+import { pool } from '../configuration/database';
 import fs from  'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
