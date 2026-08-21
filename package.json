@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx --watch index.ts",
-    "migrate": "tsx src/db/migration.ts",
+    "migrate": "tsx src/scripts/migration.ts",
     "seed": "tsx src/db/script.ts"
   },
   "author": "",
