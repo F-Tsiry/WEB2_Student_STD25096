@@ -1,23 +1,27 @@
-import express, { Request, Response } from 'express';
-import { StudentService } from '../Services/StudentService';
+import express, { type Express, type Request, type Response } from 'express';
+import { StudentService } from '../services/StudentService';
 import { authenticate, authorize } from '../Security/AuthMiddleware';
 
 export class StudentController {
-  public router = express.Router();
+  private app: Express;
   private studentService: StudentService;
 
-  constructor() {
+  constructor(app: Express) {
+    this.app = app;
     this.studentService = new StudentService();
     this.registerRoutes();
   }
 
   private registerRoutes(): void {
-    this.router.get('/', authenticate, this.getAll.bind(this));
-    this.router.get('/:id', authenticate, this.getStudentById.bind(this));
-    this.router.post('/', authenticate, authorize('ADMIN'), this.createStudent.bind(this));
-    this.router.put('/:id', authenticate, authorize('ADMIN'), this.update.bind(this));
-    this.router.patch('/:id', authenticate, authorize('ADMIN'), this.patch.bind(this));
-    this.router.delete('/:id', authenticate, authorize('ADMIN'), this.delete.bind(this));
+    // Endpoints accessibles par tout utilisateur authentifié
+    this.app.get('/students', authenticate, this.getAll.bind(this));
+    this.app.get('/students/:id', authenticate, this.getStudentById.bind(this));
+
+    // Endpoints restreints au rôle ADMIN uniquement
+    this.app.post('/students', authenticate, authorize('ADMIN'), this.createStudent.bind(this));
+    this.app.put('/students/:id', authenticate, authorize('ADMIN'), this.update.bind(this));
+    this.app.patch('/students/:id', authenticate, authorize('ADMIN'), this.patch.bind(this));
+    this.app.delete('/students/:id', authenticate, authorize('ADMIN'), this.delete.bind(this));
   }
 
   public async getAll(req: Request, res: Response): Promise<void> {
@@ -95,5 +99,3 @@ export class StudentController {
     }
   }
 }
-
-export default new StudentController().router;
