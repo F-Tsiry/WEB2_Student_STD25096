@@ -1,13 +1,18 @@
-import express, { type Express, type Request, type Response } from 'express';
-import StudentController from './src/controllers/SudentController';
+import express from 'express';
+import cors from 'cors';
+import { StudentController } from './src/controllers/SudentController';
+import { AuthController } from './src/controllers/AuthController';
 
-const app: Express = express();
-const PORT = 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.use('/students', StudentController)
+// Instanciation des contrôleurs
+new StudentController(app);
+new AuthController(app);
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
