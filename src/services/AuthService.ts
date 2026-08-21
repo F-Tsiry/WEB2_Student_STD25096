@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { UserRepository } from '../repositories/UserRepository';
 import { Credentials, AuthenticatedUser, Role } from '../models/User';
-import { signAccessToken } from '../security/jwt';
-import { HttpError } from '../security/HttpError';
+import { signAccessToken } from '../Security/jwt';
+import { HttpError } from '../Security/HttpError';
 
 export class AuthService {
   private userRepository: UserRepository;
